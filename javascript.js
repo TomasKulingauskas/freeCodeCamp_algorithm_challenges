@@ -29,8 +29,8 @@ For example: 5! = 1 * 2 * 3 * 4 * 5 = 120
 //SOLUTION
 
 function factorialize(num) {
-  factorial = 1;
-  n=1;
+  var factorial = 1;
+  var n=1;
   while (n <= num){
     factorial*=n;
     n++;

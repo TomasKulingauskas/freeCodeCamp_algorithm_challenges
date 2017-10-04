@@ -274,3 +274,172 @@ chunkArrayInGroups(["a", "b", "c", "d"], 2); // returns [["a", "b"], ["c", "d"]]
 chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3); // returns [[0, 1, 2], [3, 4, 5], [6]]
 
 //END
+
+
+/*
+Challenge 11 - Slasher Flick 
+Return the remaining elements of an array after chopping off n elements from the head.
+The head means the beginning of the array, or the zeroth index.
+*/
+
+//SOLUTION
+
+function slasher(arr, howMany) {
+  var n = 0;
+  while (n<howMany){
+    arr.splice(0,1);
+    n++;
+  }
+  return arr;
+}
+
+slasher([1, 2, 3], 2); //returns [3]
+
+//END
+
+/*
+Challenge 12 - Mutations 
+Return true if the string in the first element of the array contains all of the letters of the string in the second element of the array.
+For example, ["hello", "Hello"], should return true because all of the letters in the second string are present in the first, 
+ignoring case.
+The arguments ["hello", "hey"] should return false because the string "hello" does not contain a "y".
+Lastly, ["Alien", "line"], should return true because all of the letters in "line" are present in "Alien".
+*/
+
+//SOLUTION
+
+function mutation(arr) {
+  var first = arr[0].toLowerCase();
+  var second = arr[1].toLowerCase();
+  for (var n=0; n<second.length; n++) {
+    if (first.indexOf(second[n]) === -1) {
+      return false;
+    }
+  }
+  return true;
+}
+
+mutation(["hello", "hey"]); //returns false
+
+//END
+
+/*
+Challenge 13 - Falsy Bouncer 
+Remove all falsy values from an array.
+Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.
+*/
+
+//SOLUTION
+
+function bouncer(arr) {
+  // Don't show a false ID to this bouncer.
+  var falsyValues = [false, null, 0, "", undefined, NaN];
+  arr = arr.filter(function(value){
+     if (!isNaN(value) || falsyValues.indexOf(value) === -1){  
+      return value; 
+     }
+  });
+  return arr;
+}
+
+bouncer([7, "ate", "", false, 9]); // returns [7, "ate", 9]
+
+//END
+
+/*
+Challenge 14 - Seek and Destroy 
+You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments.
+Remove all elements from the initial array that are of the same value as these arguments.
+*/
+
+//SOLUTION
+
+function destroyer(arr) {
+  // Remove all the values
+  var argsList = [];
+  
+  for (var n=1; n<arguments.length; n++){
+    argsList.push(arguments[n]);
+  }
+  
+  var newArr = arguments[0];
+  newArr = newArr.filter(function(value){
+    if(argsList.indexOf(value) === -1){
+      return value;
+    }
+  });
+  return newArr;
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3); //returns [1,1]
+
+//END
+
+/*
+Challenge 15 - Where do I belong
+Return the lowest index at which a value (second argument) should be inserted into an array (first argument) once it has been sorted. 
+The returned value should be a number.
+For example, getIndexToIns([1,2,3,4], 1.5) should return 1 because it is greater than 1 (index 0), but less than 2 (index 1).
+Likewise, getIndexToIns([20,3,5], 19) should return 2 because once the array has been sorted it will look like [3,5,20] and 19 
+is less than 20 (index 2) and greater than 5 (index 1).
+*/
+
+//SOLUTION
+
+function getIndexToIns(arr, num) {
+  arr.push(num);
+  arr.sort(function(a,b){
+    return a - b;
+   });
+  
+  return arr.indexOf(num);
+}
+
+getIndexToIns([40, 60], 50); //returns 1
+
+//END
+
+/*
+Challenge 16 - Caesars Cipher
+One of the simplest and most widely known ciphers is a Caesar cipher, also known as a shift cipher. 
+In a shift cipher the meanings of the letters are shifted by some set amount.
+A common modern use is the ROT13 cipher, where the values of the letters are shifted by 13 places. 
+Thus 'A' ↔ 'N', 'B' ↔ 'O' and so on.
+Write a function which takes a ROT13 encoded string as input and returns a decoded string.
+All letters will be uppercase. Do not transform any non-alphabetic character (i.e. spaces, punctuation), but do pass them on.
+https://en.wikipedia.org/wiki/ROT13
+*/
+
+//SOLUTION
+
+function rot13(str) { 
+  var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var index;
+  var remainder;
+  var decodedStr = [];
+  
+  decodedStr = str.split("");
+  
+  for (var n=0; n<decodedStr.length; n++){ //loop through our split str
+    if (alphabet.indexOf(decodedStr[n]) !== -1){ // check if the character is a member of the alphabet
+        index = alphabet.indexOf(decodedStr[n])+1; //if it is, then check where it is in the alphabet. 
+          if (index>13){
+            remainder = 26%index; 
+            decodedStr[n] = alphabet[13-remainder-1];
+          }else{
+          decodedStr[n] = alphabet[index-1 + 13];
+          }
+    }else{
+      //if current decodedStr member is a non-alphabetic character, then do nothing with it.
+    }
+  }
+  
+  decodedStr = decodedStr.join("");
+  
+  return decodedStr;
+}
+
+// Change the inputs below to test
+rot13("GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK."); //returns THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX.
+
+//END

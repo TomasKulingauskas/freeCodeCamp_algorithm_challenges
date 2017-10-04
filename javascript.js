@@ -429,9 +429,7 @@ function rot13(str) {
           }else{
           decodedStr[n] = alphabet[index-1 + 13];
           }
-    }else{
-      //if current decodedStr member is a non-alphabetic character, then do nothing with it.
-    }
+      }
   }
   
   decodedStr = decodedStr.join("");
